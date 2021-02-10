@@ -17,30 +17,41 @@
 <body class="antialiased">
 <div class="container">
     <div class="row">
+        <div class="col-md-4">
+            <h1 style="margin: 20px 0;">{{ $page }}</h1>
+        </div>
+        <div class="col-md-8">
+            <a href="{{ route('product.create') }}" style="margin: 30px 0;" class="btn btn-primary">Add new product</a>
+        </div>
+    </div>
+
+    <div class="row">
         <div class="col-lg-12">
 
-            <h1 style="margin: 20px 0;">{{ $page }}</h1>
             <table class="table table-striped" >
                 <thead>
-	                <tr>
-	                    <th scope="col">id</th>
-	                    <th scope="col">Title</th>
-	                    <th scope="col">Description</th>
-	                    <th scope="col">Created</th>
-	                    <th scope="col">Updated</th>
-	                </tr>
+                    <tr>
+                        <th scope="col">Title</th>
+                        <th scope="col">Description</th>
+                        <th scope="col">Price</th>
+                        <th scope="col">Category</th>
+                        <th scope="col">Action</th>
+                    </tr>
                 </thead>
                 <tbody>
-                @foreach ( $categories as $category )    <tr>
-                        <td>{{ $category->id }}</td>
-                        <td>{{ $category->title }}</td>
-                        <td>{{ $category->description }}</td>
-                        <td>{{ $category->created_at }}</td>
-                        <td>{{ $category->updated_at }}</td>
+                @foreach ( $products as $product )    <tr>
+                        <td>{{$product->title}}</td>
+                        <td>{{$product->description}}</td>
+                        <td>{{$product->price}}</td>
+                        <td>{{$product->category->title}}</td>
+                    <td>
+                        <a href="{{ route('product.show', [$product->id]) }}" class="btn btn-primary">Show</a>
+                        <a href="{{ route('product.edit', [$product->id]) }}" class="btn btn-primary">&nbsp;Edit&nbsp;&nbsp;</a>
+                        <a href="{{ route('product.delete', [$product->id]) }}" class="btn btn-danger" onclick="return confirm('Are you sure?')">Delete</a>
+                    </td>
                     </tr>
                 @endforeach</tbody>
             </table>
-
         </div>
     </div>
 </div>

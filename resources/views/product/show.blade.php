@@ -28,29 +28,20 @@
 
         </div>
         <div class="col-lg-6">
-            <form method="POST" action="{{ route('category.store') }}">
-                @csrf
 
-                <div class="mb-3">
-                    <label class="form-label">Title</label>
-                    <input type="text" class="form-control" name="title" value="{{ old('title') }}">
-                    @error('title')
-                        <div class="alert alert-danger">{{ $message }}</div>
-                    @enderror
+            <div class="card">
+                <div class="card-header">
+                    {{ $product['title'] . ' - $ ' . $product['price'] }}
                 </div>
+                <div class="card-body">
+                    <h5 class="card-title">Description</h5>
+                    <p class="card-text">{{ $product['description'] }}</p>
+                    <a href="{{ route('product.edit', [$product->id]) }}" class="btn btn-primary">&nbsp;&nbsp;Edit&nbsp;&nbsp;</a>
+                    <a href="{{ route('products') }}" class="btn btn-primary">Return</a>
 
-                <div class="mb-3">
-                    <label class="form-label">Description</label>
-                    <input type="text" class="form-control" name="description" value="{{ old('description') }}">
-                    @error('description')
-                        <div class="alert alert-danger">{{ $message }}</div>
-                    @enderror
                 </div>
+            </div>
 
-                <button type="submit" class="btn btn-primary">Submit</button>
-                <a href="{{ route('categories') }}" class="btn btn-primary">Return</a>
-
-            </form>
         </div>
         <div class="col-md-6 offset-md-6">
 

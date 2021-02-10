@@ -28,12 +28,12 @@
 
         </div>
         <div class="col-lg-6">
-            <form method="POST" action="{{ route('category.store') }}">
+            <form method="POST" action="{{ route('product.update', $product['id']) }}">
                 @csrf
 
                 <div class="mb-3">
                     <label class="form-label">Title</label>
-                    <input type="text" class="form-control" name="title" value="{{ old('title') }}">
+                    <input type="text" class="form-control" name="title" value="{{ $product['title'] }}">
                     @error('title')
                         <div class="alert alert-danger">{{ $message }}</div>
                     @enderror
@@ -41,15 +41,22 @@
 
                 <div class="mb-3">
                     <label class="form-label">Description</label>
-                    <input type="text" class="form-control" name="description" value="{{ old('description') }}">
+                    <input type="text" class="form-control" name="description" value="{{ $product['description'] }}">
                     @error('description')
                         <div class="alert alert-danger">{{ $message }}</div>
                     @enderror
                 </div>
 
-                <button type="submit" class="btn btn-primary">Submit</button>
-                <a href="{{ route('categories') }}" class="btn btn-primary">Return</a>
+                <div class="mb-3">
+                    <label class="form-label">Price</label>
+                    <input type="text" class="form-control" name="price" value="{{ $product['price'] }}">
+                    @error('price')
+                    <div class="alert alert-danger">{{ $message }}</div>
+                    @enderror
+                </div>
 
+                <button type="submit" class="btn btn-primary">Submit</button>
+                <a href="{{ route('products') }}" class="btn btn-primary">Return</a>
             </form>
         </div>
         <div class="col-md-6 offset-md-6">

@@ -28,7 +28,7 @@
 
         </div>
         <div class="col-lg-6">
-            <form method="POST" action="{{ route('category.store') }}">
+            <form method="POST" action="{{ route('product.store') }}">
                 @csrf
 
                 <div class="mb-3">
@@ -47,9 +47,15 @@
                     @enderror
                 </div>
 
-                <button type="submit" class="btn btn-primary">Submit</button>
-                <a href="{{ route('categories') }}" class="btn btn-primary">Return</a>
+                <div class="mb-3">
+                    <label class="form-label">Price</label>
+                    <input type="text" class="form-control" name="price" value="{{ old('price') }}">
+                    @error('price')
+                    <div class="alert alert-danger">{{ $message }}</div>
+                    @enderror
+                </div>
 
+                <button type="submit" class="btn btn-primary">Submit</button>
             </form>
         </div>
         <div class="col-md-6 offset-md-6">
