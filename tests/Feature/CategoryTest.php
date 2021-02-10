@@ -11,13 +11,6 @@ class CategoryTest extends TestCase
 {
 //    use RefreshDatabase;
 
-
-//    public function testCategoryEmpty()
-//    {
-//        $this->get('/categories')
-//            ->assertSee('No Categories');
-//    }
-
     public function testUserCanSeeCategory()
     {
         $category = Category::factory()->create();
