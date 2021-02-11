@@ -48,6 +48,19 @@
                 </div>
 
                 <div class="mb-3">
+                    <label class="form-label">Category</label>
+                    <select name="category_id" class="form-control">
+                        <option value="{{ $category['title'] }}" selected disabled hidden>{{ $category['title'] }}</option>
+                        @foreach($categories as $item)
+                            <option value="{{ $item['id'] }}">{{ $item['title'] }}</option>
+                        @endforeach
+                    </select>
+                    @error('category')
+                    <div class="alert alert-danger">{{ $message }}</div>
+                    @enderror
+                </div>
+
+                <div class="mb-3">
                     <label class="form-label">Price</label>
                     <input type="text" class="form-control" name="price" value="{{ $product['price'] }}">
                     @error('price')

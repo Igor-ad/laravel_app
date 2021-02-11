@@ -20,7 +20,7 @@
 
 </head>
 <div class="container">
-    <h1 style="margin: 20px 0;">{{ $page }}</h1>
+    <h1 style="margin: 20px 0;">{{  $category['title'] . ': ' . $page }}</h1>
 
     <div class="row">
 
