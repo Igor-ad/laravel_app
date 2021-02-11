@@ -14,7 +14,7 @@ class AddColomnCommentIdToProductsTable extends Migration
     public function up()
     {
         Schema::table('products', function (Blueprint $table) {
-            $table->integer('comment_id')->after('category_id')->default(1);
+            $table->integer('comment_id')->after('category_id')->nullable();
         });
     }
 
