@@ -3,47 +3,57 @@
 namespace Tests\Feature;
 
 use App\Models\Category;
+use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
 class CategoryTest extends TestCase
 {
-//    use RefreshDatabase;
+    use RefreshDatabase;
 
     public function testUserCanSeeCategory()
     {
+        $user = User::factory()->create();
         $category = Category::factory()->create();
-        $this->get('/categories')
+        $this->actingAs($user)
+            ->get('/categories')
             ->assertSee($category['title']);
     }
 
     public function testCreateCategory()
     {
+        $user = User::factory()->create();
         $category = Category::factory()->raw();
         $this->post('/categories', $category);
         $this->assertDatabaseHas('categories', $category);
-        $this->get('/categories')
+        $this->actingAs($user)
+            ->get('/categories')
             ->assertSee($category['title']);
     }
 
     public function testCreateCategoryRequiredFields()
     {
-        $this->post('/categories')
+        $user = User::factory()->create();
+        $this->actingAs($user)
+            ->post('/categories')
             ->assertSessionHasErrors(['title', 'description']);
     }
 
     public function testDeleteCategory()
     {
+        $user = User::factory()->create();
         $category = Category::factory()->create();
         $id = $category['id'];
-        $this->get('/categories/delete/' . $id);
+        $this->actingAs($user)
+            ->get('/categories/delete/' . $id);
         $this->get('/categories')
             ->assertDontSee($category['title']);
     }
 
     public function testUpdateCategory()
     {
+        $user = User::factory()->create();
         $category = Category::factory()->create();
         $id = $category['id'];
         $categoryNew = [
@@ -52,7 +62,8 @@ class CategoryTest extends TestCase
         ];
         $this->post('/categories/' . $id, $categoryNew);
         $this->assertDatabaseHas('categories', $categoryNew);
-        $this->get('/categories')
+        $this->actingAs($user)
+            ->get('/categories')
             ->assertSee($categoryNew['title']);
     }
 }
