@@ -1,10 +1,10 @@
 @extends('base')
 
-@section('page_title', $page)
+@section('page_title', __('items.prod_show'))
 
 @section('content')
 <div class="container">
-    <h1 style="margin: 20px 0;">{{  $category['title'] . ': ' . $page }}</h1>
+    <h1 style="margin: 20px 0;">{{  $category['title'] . ': ' . __('items.prod_show') }}</h1>
 
     <div class="row">
 

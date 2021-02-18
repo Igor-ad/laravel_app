@@ -10,22 +10,18 @@ class CategoryController extends Controller
 {
     public function index()
     {
-        $page = 'Categories';
         $categories = Category::all();
-        return view('category.index' , compact('categories', 'page'));
+        return view('category.index' , compact('categories'));
     }
 
     public function create()
     {
-        $page = 'Create category';
-        return view('category.create', compact('page'));
+        return view('category.create');
     }
 
-    public function edit($id)
+    public function edit(Category $category)
     {
-        $page = 'Edit category';
-        $category = Category::find($id);
-        return view('category.edit', compact('category','page'));
+        return view('category.edit', compact('category'));
     }
 
     public function store(CategoryStoreRequest $request)
@@ -33,29 +29,27 @@ class CategoryController extends Controller
         $request->validated();
         $data = request(['title', 'description']);
         Category::create($data);
-        return redirect()->to('categories');
+        return redirect()->route('categories');
     }
 
-    public function show($id)
+    public function show(Category $category)
     {
-        $page = 'View Category';
-        $category = Category::find($id);
-        return view('category.show', compact('category', 'page'));
+        return view('category.show', compact('category'));
     }
 
 
-    public function update(CategoryStoreRequest $request, $id)
+    public function update(CategoryStoreRequest $request, Category $category)
     {
-        $category = Category::findOrFail($id);
+        $category = Category::findOrFail($category->id);
         $request->validated();
         $data = request(['title', 'description']);
-        $category->fill($data)->save();
-        return redirect()->to('categories');
+        $category->update($data);
+        return redirect()->route('categories');
     }
 
-    public function delete($id)
+    public function delete(Category $category)
     {
-        Category::destroy($id);
-        return redirect()->to('categories');
+        Category::destroy($category->id);
+        return redirect()->route('categories');
     }
 }

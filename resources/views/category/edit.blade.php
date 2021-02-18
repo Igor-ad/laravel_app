@@ -1,10 +1,10 @@
 @extends('base')
 
-@section('page_title', $page)
+@section('page_title', __('items.cat_edit'))
 
 @section('content')
 <div class="container">
-    <h1 style="margin: 20px 0;">{{ $page }}</h1>
+    <h1 style="margin: 20px 0;">{{ __('items.cat_edit') }}</h1>
 
     <div class="row">
 

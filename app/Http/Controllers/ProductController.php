@@ -11,54 +11,51 @@ class ProductController extends Controller
 {
     public function index()
     {
-        $page = 'Products';
         $products = Product::with(['category'])->get();
-        return view('product.index', compact('products', 'page'));
+        return view('product.index', compact('products'));
     }
 
     public function create()
     {
-        $page = 'Create product';
         $categories = Category::all();
-        return view('product.create', compact('categories', 'page'));
+        return view('product.create', compact('categories'));
     }
 
-    public function edit($id)
+    public function edit(Product $product)
     {
-        $page = 'Edit product';
-        $product = Product::find($id);
+        $product = Product::find($product->id);
         $categories = Category::all();
-        $category = Category::find($product['category_id']);
-        return view('product.edit', compact('product', 'category', 'categories', 'page'));
+        $category = Category::find($product->category_id);
+        return view('product.edit', compact('product', 'category', 'categories'));
     }
 
     public function store(ProductStoreRequest $request)
     {
         $request->validated();
-        $data = request(['category_id', 'title', 'description', 'price']);
+        $data = request(['title', 'description', 'price', 'category_id']);
+        Category::findOrFail($data['category_id']);
         Product::create($data);
-        return redirect()->to('products');
+        return redirect()->route('products');
     }
 
     public function show(Product $product)
     {
-        $page = 'View Product';
-        $category = Category::find($product['category_id']);
-        return view('product.show', compact('product', 'category', 'page'));
+        $category = Category::find($product->category_id);
+        return view('product.show', compact('product', 'category'));
     }
 
-    public function update(ProductStoreRequest $request, $id)
+    public function update(ProductStoreRequest $request, Product $product)
     {
-        $category = Product::findOrFail($id);
+        $product = Product::findOrFail($product->id);
         $request->validated();
-        $data = request(['category_id', 'title', 'description', 'price']);
-        $category->fill($data)->save();
-        return redirect()->to('products');
+        $data = request(['title', 'description', 'price', 'category_id']);
+        $product->update($data);
+        return redirect()->route('products');
     }
 
-    public function delete($id)
+    public function delete(Product $product)
     {
-        Product::destroy($id);
-        return redirect()->to('products');
+        Product::destroy($product->id);
+        return redirect()->route('products');
     }
 }

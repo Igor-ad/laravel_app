@@ -1,12 +1,12 @@
 @extends('base')
 
-@section('page_title', $page )
+@section('page_title', __('items.cat_index') )
 
 @section('content')
 <div class="container">
     <div class="row">
         <div class="col-md-4">
-            <h1 style="margin: 20px 0;">{{ $page }}</h1>
+            <h1 style="margin: 20px 0;">{{ __('items.cat_index') }}</h1>
         </div>
         <div class="col-md-8">
             <a href="{{ route('category.create') }}" style="margin: 30px 0;" class="btn btn-primary">Add new category</a>
