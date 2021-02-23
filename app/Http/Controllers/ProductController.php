@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Http\Requests\ProductStoreRequest;
 use App\Models\Category;
 use App\Models\Product;
-use Illuminate\Http\Request;
 
 class ProductController extends Controller
 {
@@ -23,39 +22,30 @@ class ProductController extends Controller
 
     public function edit(Product $product)
     {
-        $product = Product::find($product->id);
         $categories = Category::all();
-        $category = Category::find($product->category_id);
-        return view('product.edit', compact('product', 'category', 'categories'));
+        return view('product.edit', compact('product', 'categories'));
     }
 
     public function store(ProductStoreRequest $request)
     {
-        $request->validated();
-        $data = request(['title', 'description', 'price', 'category_id']);
-        Category::findOrFail($data['category_id']);
-        Product::create($data);
+        Product::create($request->all());
         return redirect()->route('products');
     }
 
     public function show(Product $product)
     {
-        $category = Category::find($product->category_id);
-        return view('product.show', compact('product', 'category'));
+        return view('product.show', compact('product'));
     }
 
     public function update(ProductStoreRequest $request, Product $product)
     {
-        $product = Product::findOrFail($product->id);
-        $request->validated();
-        $data = request(['title', 'description', 'price', 'category_id']);
-        $product->update($data);
+        $product->update($request->all());
         return redirect()->route('products');
     }
 
     public function delete(Product $product)
     {
-        Product::destroy($product->id);
+        $product->delete();
         return redirect()->route('products');
     }
 }
