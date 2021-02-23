@@ -5,12 +5,11 @@ namespace Tests\Feature;
 use App\Models\Category;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
 class CategoryTest extends TestCase
 {
-    use RefreshDatabase;
+//    use RefreshDatabase;
 
     public function testUserCanSeeCategory()
     {
@@ -44,9 +43,8 @@ class CategoryTest extends TestCase
     {
         $user = User::factory()->create();
         $category = Category::factory()->create();
-        $id = $category['id'];
         $this->actingAs($user)
-            ->get('/categories/delete/' . $id);
+            ->get('/categories/delete/' . $category['id']);
         $this->get('/categories')
             ->assertDontSee($category['title']);
     }
