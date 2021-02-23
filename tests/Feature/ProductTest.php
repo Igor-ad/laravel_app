@@ -6,7 +6,6 @@ use App\Models\Category;
 use App\Models\Product;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
 class ProductTest extends TestCase
@@ -26,7 +25,6 @@ class ProductTest extends TestCase
     {
         $user = User::factory()->create();
         $product = Product::factory()->raw();
-        $product['category_id'] = Category::factory()->create()->id;
         $this->post('/products', $product);
         $this->assertDatabaseHas('products', $product);
         $this->actingAs($user)
@@ -62,14 +60,6 @@ class ProductTest extends TestCase
     {
         $user = User::factory()->create();
         $product = Product::factory()->create();
-        $productNew = [
-            "title" => $product['title'],
-            "description" => $product['description'],
-            "price" => $product['price'],
-            'category_id' => Category::factory()->create()->id
-        ];
-        $this->post('/products/' . $product['id'], $productNew);
-        $this->assertDatabaseHas('products', $productNew);
         $this->actingAs($user)
             ->get('/products/delete/' . $product['id']);
         $this->get('/products')
