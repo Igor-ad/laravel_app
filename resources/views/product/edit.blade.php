@@ -1,6 +1,6 @@
 @extends('base')
 
-@section('page_title', __('items.prod_edit    '))
+@section('page_title', __('items.prod_edit'))
 
 @section('content')
     <div class="container">
