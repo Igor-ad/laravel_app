@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\CategoryStoreRequest;
 use App\Models\Category;
-use Illuminate\Http\Request;
 
 class CategoryController extends Controller
 {
@@ -26,9 +25,7 @@ class CategoryController extends Controller
 
     public function store(CategoryStoreRequest $request)
     {
-        $request->validated();
-        $data = request(['title', 'description']);
-        Category::create($data);
+        Category::create($request->all());
         return redirect()->route('categories');
     }
 
@@ -40,16 +37,13 @@ class CategoryController extends Controller
 
     public function update(CategoryStoreRequest $request, Category $category)
     {
-        $category = Category::findOrFail($category->id);
-        $request->validated();
-        $data = request(['title', 'description']);
-        $category->update($data);
+        $category->update($request->all());
         return redirect()->route('categories');
     }
 
     public function delete(Category $category)
     {
-        Category::destroy($category->id);
+        $category->delete();
         return redirect()->route('categories');
     }
 }
